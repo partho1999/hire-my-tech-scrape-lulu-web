@@ -55,17 +55,24 @@ for link in p_links:
 
     n_o_r=[]
     num_of_reviews= soup.find("div", {"class": "col-lg-auto reviews-count"})
-    print(num_of_reviews.text)
-    n_o_r.append(num_of_reviews.text)
+    if num_of_reviews is None:
+        n_o_r.append('no-reviews')
+    else:
+        print(num_of_reviews.text)
+        n_o_r.append(num_of_reviews.text)
 
     price_tag_detail= soup.find("div", {"class": "price-tag detail"})
     #print(price_tag_detail)
-
+    if price_tag_detail is None:
+        pass
     #off price
     o_p=[]
     off_price= soup.find("span", {"class": "off"})
-    print('off-price:',off_price.text)
-    o_p.append(off_price.text)
+    if off_price is None:
+        o_p.append('no-off-price')
+    else:
+        print('off-price:',off_price.text)
+        o_p.append(off_price.text)
 
     #current-price
     c_p=[]
@@ -76,17 +83,24 @@ for link in p_links:
     #item-off-percent
     i_o_p=[]
     item_off_percent= soup.find("span", {"class": "item off-percent"})
-    print('item-off-percent:',item_off_percent.text)
-    i_o_p.append(item_off_percent.text.replace("\n",""))
+    if item_off_percent is None:
+        i_o_p.append('no-off')
+    else:
+        print('item-off-percent:',item_off_percent.text)
+        i_o_p.append(item_off_percent.text.replace("\n",""))
 
     #warranty
-    war=[]
-    for warranty in soup.find("div", {"class": "row tax-instituion tooltipwarranty badgeenglishae"}):
-        #print('warranty:',warranty.text)
-        war.append(warranty.text.replace("\n",""))
+    warr=soup.find("div", {"class": "row tax-instituion tooltipwarranty badgeenglishae"})
+    if warr is None:
+        pass
+    else:
+        war=[]
+        for warranty in soup.find("div", {"class": "row tax-instituion tooltipwarranty badgeenglishae"}):
+            #print('warranty:',warranty.text)
+            war.append(warranty.text.replace("\n",""))
 
-    print('warranty:',war[0])
-    war1=[]
+        print('warranty:',war[0])
+    
 
     dict5 = {'Product-Name': p_nam, 'Number-of-reviews':n_o_r, 'Off-price':o_p, 'Current-price':c_p, 'Item-off-percent':i_o_p, 'warranty':war[0]} 
         
